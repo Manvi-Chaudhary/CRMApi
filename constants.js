@@ -1,0 +1,9 @@
+const VALIDATION_ERROR = 400
+const FORBIDDEN = 403
+const NOT_FOUND = 404
+
+module.exports = {
+    VALIDATION_ERROR,
+    FORBIDDEN,
+    NOT_FOUND
+}
