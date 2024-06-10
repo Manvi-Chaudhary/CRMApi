@@ -18,6 +18,9 @@ app.use("/customer",require("./routes/customerRoutes"));
 app.use("/order",require("./routes/orderRoutes"))
 app.use("/campaign",require("./routes/campaignRoutes"))
 
+app.use("/vendor",require("./vendorAPI/vendorRoute"))
+
+
 app.use(errorHandler)
 
 app.get("/",(req,res)=>{

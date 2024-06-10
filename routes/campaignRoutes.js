@@ -4,4 +4,6 @@ const controller = require("../controllers/campaignController")
 
 router.route("/").get(controller.getAllCampaigns).post(controller.addCampaign);
 
+router.route("/send-message").post(controller.sendMessageToAllVendors);
+
 module.exports = router
