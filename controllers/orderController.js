@@ -8,6 +8,10 @@ const customer = require("../models/customerModel")
 //@access public
 const getAllOrders = asyncHandler (async (req,res) => {
     const { amountThreshold  , orderCountThreshold , lastVisitedThreshold } = req.query
+    if(!amountThreshold || !orderCountThreshold || !lastVisitedThreshold){
+      const result = await order.find();
+      res.status(200).json(result)
+    }
     const amtThresh = parseInt(amountThreshold);
     const orderThresh = parseInt(orderCountThreshold);
     const agg = [
