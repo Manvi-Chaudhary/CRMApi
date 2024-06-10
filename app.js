@@ -16,6 +16,7 @@ app.use(express.json());
 
 app.use("/customer",require("./routes/customerRoutes"));
 app.use("/order",require("./routes/orderRoutes"))
+app.use("/campaign",require("./routes/campaignRoutes"))
 
 app.use(errorHandler)
 
