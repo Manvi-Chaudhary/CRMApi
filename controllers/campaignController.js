@@ -39,7 +39,7 @@ const sendMessageToAllVendors = (async (req,res)=>{
 })
 
 const sendMessage = ( async (val,ind,arr) => {
-    const apiEndpoint = 'http://localhost:5000/vendor/'; 
+    const apiEndpoint = 'https://crmapi.onrender.com/vendor/'; 
     const res1 = await axios.post(apiEndpoint, 
         {
          customerId: val._id,
