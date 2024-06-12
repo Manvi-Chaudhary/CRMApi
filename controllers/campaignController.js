@@ -54,7 +54,7 @@ async function simulateDeliveryReceipt(communicationLogId) {
     try {
       const status = Math.random() < 0.9 ? 'SENT' : 'FAILED';
   
-      const deliveryReceiptApiEndpoint = 'http://localhost:5000/delivery-reciept'; 
+      const deliveryReceiptApiEndpoint = 'https://crmapi.onrender.com/delivery-receipt'; 
       const response = await axios.post(deliveryReceiptApiEndpoint, {
         communicationLogId,
         status
