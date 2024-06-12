@@ -11,4 +11,4 @@ const campaignSchema = mongoose.Schema({
 }
 );
 
-module.exports = mongoose.model("Consumer_log",campaignSchema)
+module.exports = mongoose.model("consumer_logs",campaignSchema)

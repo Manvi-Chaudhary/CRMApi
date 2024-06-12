@@ -19,7 +19,12 @@ app.use("/order",require("./routes/orderRoutes"))
 app.use("/campaign",require("./routes/campaignRoutes"))
 
 app.use("/vendor",require("./vendorAPI/vendorRoute"))
-
+app.post("/delivery-receipt",(req,res)=>{
+    const { communicationLogId , status } = req.body;
+    res.json({
+        message : `delivery status is ${status} for ${communicationLogId}`
+    })
+})
 
 app.use(errorHandler)
 

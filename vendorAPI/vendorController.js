@@ -1,5 +1,6 @@
 
 
+
 const getAllVendors = (req,res)=>{
     res.status(200).json({
         message : "This is dummy vendor api"
@@ -7,9 +8,11 @@ const getAllVendors = (req,res)=>{
 }
 
 const messageReceived = (req,res)=>{
-    const { customerId } = req.body;
+    const {  communicationLogId  } = req.body;
+    
     res.status(200).json({
-        message : `message recieved successfully by ${customerId}`
+        message,
+        communicationLogId : communicationLogId,
     })
 }
 

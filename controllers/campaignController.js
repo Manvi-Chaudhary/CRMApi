@@ -24,13 +24,25 @@ const addCampaign = ( async (req,res)=>{
 })
 
 const sendMessageToAllVendors = (async (req,res)=>{
-    const { communicationLogId , message } = req.body ;
+    const { communicationLogId  } = req.body ;
     const communicationLog = await campaign.findById(communicationLogId);
-    const customers = await Customer.find({ _id: { $in: communicationLog.audience } })
-
-
-    customers.forEach(sendMessage);
     
+    const customers = await Customer.find({ _id: { $in: communicationLog.audience.customerId } })
+    const messages = customers.map(customer => {
+        return {
+          customerId: customer._id,
+          message: `Hi ${customer.name}, here is 10% off on your next order`,
+          email: customer.email 
+        };
+      });
+  
+ 
+    const apiEndpoint = 'https://crmapi.onrender.com/vendor'; 
+    const response = await axios.post(apiEndpoint, { messages });
+    
+    for (let message of messages) {
+        await simulateDeliveryReceipt(communicationLogId);
+    }
     
     //console.log(response.data)
     res.status(201).json({
@@ -38,14 +50,29 @@ const sendMessageToAllVendors = (async (req,res)=>{
     })
 })
 
-const sendMessage = ( async (val,ind,arr) => {
-    const apiEndpoint = 'https://crmapi.onrender.com/vendor/'; 
-    const res1 = await axios.post(apiEndpoint, 
-        {
-         customerId: val._id,
-         message: `Hi ${val.name}, here is 10% off on your next order`,
-         email: val.email 
-       });
-})
+async function simulateDeliveryReceipt(communicationLogId) {
+    try {
+      const status = Math.random() < 0.9 ? 'SENT' : 'FAILED';
+  
+      const deliveryReceiptApiEndpoint = 'http://localhost:5000/delivery-reciept'; 
+      const response = await axios.post(deliveryReceiptApiEndpoint, {
+        communicationLogId,
+        status
+      });
+  
+      await campaign.findByIdAndUpdate(communicationLogId, {
+        $set: {
+          status,
+          updatedAt: new Date()
+        }
+      });
+  
+      console.log(`Delivery receipt for ${communicationLogId}: ${status}`);
+    } catch (error) {
+      console.error('Error simulating delivery receipt:', error);
+    }
+  }
+  
+
 
 module.exports = { getAllCampaigns , addCampaign , sendMessageToAllVendors }
